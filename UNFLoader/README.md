@@ -26,7 +26,7 @@ This folder holds the source code for the UNFLoader program itself. This README 
 <p>
     
 * Ubuntu (Haven't tested with others)
-* Run the included `installer_linux.sh` script to set up everything for you. If you are unable to launch the script, remember to mark it as executable.
+* Run the included `installer_linux.sh` script to set up everything for you. If you are unable to launch the script, remember to mark it as executable. You can use `installer_linux.sh -y` to skip the interactive questions and just accept the default values.
 
 If you do not wish to run the script, then you must:
 * You must run UNFLoader with `sudo`.
@@ -132,7 +132,7 @@ Once the dependencies are installed, simply execute the makefile:
 make
 ```
 
-If you haven't done so previously, it is recommended that you run `installer_linux.sh`. 
+If you haven't done so previously, it is recommended that you run `installer_linux.sh`. You can use `installer_linux.sh -y` to skip the interactive questions and just accept the default values.
 
 You can optionally install UNFLoader to `/usr/local/bin` (which will let you execute the tool in any folder, just remember to use `sudo`!) by calling:
 ```

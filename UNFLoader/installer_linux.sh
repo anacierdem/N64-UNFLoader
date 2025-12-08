@@ -4,13 +4,28 @@
 Green='\033[0;32m'
 ColorOff='\033[0m'
 USERNAME=`whoami`
+Skip=false
+yn=false
+
+# Check for arguments
+while getopts ":y" o; do
+    case "${o}" in
+        y)
+            Skip=true
+            ;;
+    esac
+done
 
 # Introduce the script
 echo -e -n ${Green}
 echo "This script will set up udev rules for supported UNFLoader flashcarts, as well as install UNFLoader itself to /usr/local/bin/."
 echo "These operations will require sudo."
 while true; do
-    read -p "Would you like to continue? (y/n) " yn
+    if [ "$Skip" = true ]; then
+        yn='y'
+    else
+        read -p "Would you like to continue? (y/n) " yn
+    fi
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -28,7 +43,11 @@ echo "I would like to install udev rules."
 echo "This will allow you to run UNFLoader without needing to call sudo."
 while true; do
     UDEVUPDATED=false
-    read -p "Would you like to setup udev rules? (y/n) " yn
+    if [ "$Skip" = true ]; then
+        yn='y'
+    else
+        read -p "Would you like to setup udev rules? (y/n) " yn
+    fi
     case $yn in
         [Yy]* )
             # 64Drive
@@ -137,7 +156,11 @@ echo -n -e ${Green}
 echo "Would you like to move UNFLoader to /usr/local/bin/?"
 echo "This will let you run UNFLoader from any folder."
 while true; do
-    read -p "Continue? (y/n) " yn
+    if [ "$Skip" = true ]; then
+        yn='y'
+    else
+        read -p "Continue? (y/n) " yn
+    fi
     case $yn in
         [Yy]* ) 
             echo -e -n ${ColorOff}
