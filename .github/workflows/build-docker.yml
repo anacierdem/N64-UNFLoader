@@ -1,0 +1,40 @@
+name: Build-Docker
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  Build-Docker-Image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Create a lower cased version of the repo name. This is required
+      # because Docker supports only lowercase names in the registry, while
+      # a repo name on GitHub can have uppercase letters.
+      - name: Set variables
+        id: vars
+        run: |
+          echo "repository_name=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v3
+
+
+      - name: Log in to the container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push latest image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ghcr.io/${{ steps.vars.outputs.repository_name }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
