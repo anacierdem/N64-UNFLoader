@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install \
 
 USER ubuntu
 
-FROM dependencies
+FROM dependencies AS builder
 
 WORKDIR /unf
 
@@ -20,3 +20,7 @@ COPY --chown=ubuntu:ubuntu . .
 
 WORKDIR /unf/UNFLoader
 RUN make
+
+# Final minimal image
+FROM ubuntu:24.04
+COPY --from=builder /unf/UNFLoader/UNFLoader /unf/UNFLoader/UNFLoader
