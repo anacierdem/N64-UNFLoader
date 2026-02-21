@@ -1,5 +1,6 @@
 {
     "build": { "dockerfile": "../Dockerfile", "context": "../", "target": "dependencies" },
+    "containerUser": "ubuntu",
     "runArgs": [
         "--device=/dev/bus/usb"
     ]

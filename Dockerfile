@@ -10,9 +10,9 @@ RUN apt-get update && apt-get install \
     libudev-dev \
     -yq
 
-USER ubuntu
-
 FROM dependencies AS builder
+
+USER ubuntu
 
 WORKDIR /unf
 
